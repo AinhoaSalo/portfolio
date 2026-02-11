@@ -1,0 +1,143 @@
+<section id="contact" class="py-20 bg-white" role="region" aria-labelledby="contact-heading">
+  <div class="container mx-auto px-6">
+    <h2 id="contact-heading" class="text-4xl font-bold text-gray-900 mb-4 text-center">Get In Touch</h2>
+    <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+      Have a project in mind or want to collaborate? Feel free to reach out!
+    </p>
+
+    <div class="max-w-2xl mx-auto">
+      <form (ngSubmit)="onSubmit($event)" class="space-y-6" aria-label="Contact form">
+        <!-- Name Field -->
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+            Name <span class="text-red-500" aria-label="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="name"
+            [value]="formData().name"
+            (input)="updateField('name', $any($event.target).value)"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow"
+            placeholder="Your name"
+            aria-required="true"
+            [attr.aria-invalid]="formData().name === '' ? 'true' : 'false'"
+            [disabled]="submitStatus() === 'submitting'">
+        </div>
+
+        <!-- Email Field -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+            Email <span class="text-red-500" aria-label="required">*</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            [value]="formData().email"
+            (input)="updateField('email', $any($event.target).value)"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow"
+            placeholder="your.email@example.com"
+            aria-required="true"
+            [attr.aria-invalid]="formData().email === '' ? 'true' : 'false'"
+            [disabled]="submitStatus() === 'submitting'">
+        </div>
+
+        <!-- Message Field -->
+        <div>
+          <label for="message" class="block text-sm font-medium text-gray-700 mb-2">
+            Message <span class="text-red-500" aria-label="required">*</span>
+          </label>
+          <textarea
+            id="message"
+            [value]="formData().message"
+            (input)="updateField('message', $any($event.target).value)"
+            required
+            rows="6"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow resize-none"
+            placeholder="Tell me about your project or idea..."
+            aria-required="true"
+            [attr.aria-invalid]="formData().message === '' ? 'true' : 'false'"
+            [disabled]="submitStatus() === 'submitting'"></textarea>
+        </div>
+
+        <!-- Submit Button using @switch for different states -->
+        @switch (submitStatus()) {
+          @case ('idle') {
+            <button
+              type="submit"
+              class="w-full px-8 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              aria-label="Send message">
+              Send Message
+            </button>
+          }
+          @case ('submitting') {
+            <button
+              type="button"
+              disabled
+              class="w-full px-8 py-3 bg-primary-400 text-white rounded-lg font-semibold cursor-not-allowed flex items-center justify-center gap-2"
+              aria-label="Sending message"
+              aria-busy="true">
+              <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Sending...
+            </button>
+          }
+          @case ('success') {
+            <div 
+              class="w-full px-8 py-3 bg-green-100 text-green-800 rounded-lg font-semibold text-center flex items-center justify-center gap-2"
+              role="alert"
+              aria-live="polite">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              Message sent successfully!
+            </div>
+          }
+          @case ('error') {
+            <div 
+              class="w-full px-8 py-3 bg-red-100 text-red-800 rounded-lg font-semibold text-center"
+              role="alert"
+              aria-live="assertive">
+              Error sending message. Please try again.
+            </div>
+          }
+        }
+      </form>
+
+      <!-- Contact Information -->
+      <div class="mt-12 pt-12 border-t border-gray-200">
+        <div class="grid md:grid-cols-3 gap-6 text-center">
+          <div>
+            <svg class="w-8 h-8 mx-auto mb-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <h3 class="font-semibold text-gray-900 mb-1">Email</h3>
+            <a href="mailto:contact@example.com" class="text-primary-600 hover:text-primary-700">
+              contact@example.com
+            </a>
+          </div>
+          <div>
+            <svg class="w-8 h-8 mx-auto mb-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <h3 class="font-semibold text-gray-900 mb-1">Location</h3>
+            <p class="text-gray-600">Remote / Available Worldwide</p>
+          </div>
+          <div>
+            <svg class="w-8 h-8 mx-auto mb-2 text-primary-600" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+            </svg>
+            <h3 class="font-semibold text-gray-900 mb-1">GitHub</h3>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="text-primary-600 hover:text-primary-700">
+              github.com/username
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
